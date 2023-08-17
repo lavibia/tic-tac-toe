@@ -15,6 +15,7 @@ body{
     display: flex;
 }
 header{
+    
     padding: 10px;
     display: grid;
     width: 100%;
@@ -36,6 +37,7 @@ header h1{
     justify-self: center;
 }
 main{
+    background-color: rgb(235, 238, 240);
     padding: 10px;
     display: grid;
     grid-template-rows: 1fr 4fr 1fr;
@@ -52,6 +54,9 @@ main #players{
     height: fit-content;
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+.activePlayer{
+    background-color: brown;
 }
 #gameboard{
     padding: 20px;
@@ -75,6 +80,9 @@ main #players{
     border: 1px solid gray;
     border-radius: 10px;
     background-color: aquamarine;
+}
+#gameboard div:hover{
+    background-color: brown;
 }
 #score{
 background-color: aquamarine;
