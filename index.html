@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +9,56 @@
     <script src="script.js" defer></script>
     <title>Document</title>
 </head>
+
 <body>
-    
+    <div class="container">
+        <header>
+            <h1>Tic Tac Toe</h1>
+            <button type="reset" id="reset"> 🔃 Reset</button>
+        </header>
+        <main>
+            <div id="players">
+                <div class="player">
+                    <p id="playerOne">Player One</p>
+                    <p id="MarkerOne">X</p>
+
+
+                </div>
+                <div class="player">
+                    <p id="playerTwo">Player Two</p>
+                    <p id="MarkerTwo">O</p>
+                </div>
+            </div>
+            <div id="gameboard">
+                <div class="cell">0</div>
+                <div class="cell">1</div>
+                <div class="cell">2</div>
+                <div class="cell">3</div>
+                <div class="cell">4</div>
+                <div class="cell">5</div>
+                <div class="cell">6</div>
+                <div class="cell">7</div>
+                <div class="cell">8</div>
+            </div>
+            <div id="score">
+                <div>
+                    <p>PlayerOne</p>
+                    <p>0</p>
+                </div>
+                <div>
+                    <p>Tie</p>
+                    <p>0</p>
+                </div>
+                <div>
+                    <p>PlayerTwo</p>
+                    <p>0</p>
+                </div>
+            </div>
+        </main>
+        <footer>
+           <p> Created with passion by <a href="https://github.com/lavibia">Lavinia</a></p>
+        </footer>
+    </div>
 </body>
+
 </html>
