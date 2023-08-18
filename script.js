@@ -64,26 +64,26 @@ const GameController = (playerOne, playerTwo) => {
     const players = [playerOne, playerTwo];
     let activePlayer = players[0];
     let board = Gameboard();
-    displayController().renderPlayer(playerOne,playerTwo);
+    displayController().renderPlayer(playerOne, playerTwo);
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
 
-        displayController().renderActivePLayer(activePlayer);
-       
+
     }
     const getActivePlayer = () => activePlayer;
 
     const printNewRound = () => {
         board.printGameboard();
-        displayController().renderGameboard(board);
         console.log(` ${getActivePlayer().getName()} 's turn`);
+
+        displayController().renderActivePLayer(getActivePlayer());
     };
 
     const playRound = ([row, column]) => {
         console.log(`${getActivePlayer().getName()} put an ${getActivePlayer().getMarker()} on position ${[row, column]}`);
         board.updateGameboard(row, column, getActivePlayer().getMarker());
-       
+    
         switchPlayerTurn();
         printNewRound();
     }
@@ -98,72 +98,79 @@ const GameController = (playerOne, playerTwo) => {
 
 
 const displayController = () => {
-    
 
+    let playerTurn= document.getElementById("activePlayer");
     let nodeGameboard = document.getElementById("gameboard");
-    let playerOneName = document.getElementById("playerOne");
-    let playerOneMarker = document.getElementById("markerOne");
-    let playerTwoName = document.getElementById("playerTwo");
-    let playerTwoMarker = document.getElementById("markerTwo");
-    let winPlayerOne=document.getElementById('winOne').children[0]
-    let winPlayerTwo =document.getElementById('winTwo').children[0]
-    const renderGameboard=(board)=>{
-        for (let i = 0; i < nodeGameboard.children.length; i++) {
-            if (i < 3) {
-                nodeGameboard.children[i].textContent = board.getGameboard()[0][i].getValue()
-                
-            }
-            if (i >= 3 && i < 6) {
-                nodeGameboard.children[i].textContent = board.getGameboard()[1][i -3].getValue()
-            }
-            if (i >= 6) {
-                nodeGameboard.children[i].textContent = board.getGameboard()[2][i - 6].getValue();
-            }
+    let winPlayerOne = document.getElementById('winOne').children[0]
+    let winPlayerTwo = document.getElementById('winTwo').children[0]
+    const renderMark = (cell) => {
+        if(nodeGameboard.classList.contains("x")){
+            cell.classList.remove("circle")
+            cell.classList.add("x")
         }
-    }
-    const renderPlayer =(playerOne, playerTwo)=>{
-        playerOneName.textContent=playerOne.getName();
-        playerOneMarker.textContent = playerOne.getMarker();
-        playerTwoName.textContent = playerTwo.getName();
-        playerTwoMarker.textContent = playerTwo.getMarker();
+        else{
+            cell.classList.remove("x")
+            cell.classList.add("circle")
+        }
+        }
+    
+    const renderPlayer = (playerOne, playerTwo) => {
         winPlayerOne.textContent = playerOne.getName();
         winPlayerTwo.textContent = playerTwo.getName();
     }
-    const renderActivePLayer =(activePlayer)=>{
+    const renderActivePLayer = (activePlayer) => {
         console.log(`active ${activePlayer.getName()}`)
-        if(activePlayer.getName()==playerOne.textContent){
-            playerTwoName.classList.remove('activePlayer');
-            playerOneName.classList.add('activePlayer');
-        }else{
-            playerTwoName.classList.add('activePlayer');
-            playerOneName.classList.remove('activePlayer');
+        playerTurn.textContent=`${activePlayer.getName()}'s turn`;
+        if(activePlayer.getMarker()=="X"){
+            nodeGameboard.classList.remove("circle");
+            nodeGameboard.classList.add("x");
+
+        }
+        else{
+            nodeGameboard.classList.add("circle");
+            nodeGameboard.classList.remove("x");
         }
     }
-    return{renderGameboard, 
-        renderPlayer, renderActivePLayer}
+    return {
+        // renderGameboard,
+        renderMark,
+        renderPlayer, renderActivePLayer
+    }
 }
-const startGame=()=>{
+const startGame = (event) => {
+    document.getElementById("formPlayerInfo").style.display="none";
 
-const game = GameController(Player("LAvinia", "O"), Player("Larisa", "X"));
-let nodeGameboard = document.getElementById("gameboard");
+    let PlayerOneName = document.getElementById('playerOneName').value;
+    let PlayeTwoName = document.getElementById('playerTwoName').value;
+console.log(PlayerOneName)
+    
+    const game = GameController(Player(PlayerOneName ="Player One", "X"), Player(PlayeTwoName ="Player Two", "O"));
 
-//add click listener for cells
-for (let i = 0; i < nodeGameboard.children.length; i++) 
-{
-    if (i < 3) {
-        nodeGameboard.children[i].addEventListener('click',()=>{
-            game.playRound([0,i])
-        })
+
+    let nodeGameboard = document.getElementById("gameboard");
+
+    //add click listener for cells
+    for (let i = 0; i < nodeGameboard.children.length; i++) {
+        if (i < 3) {
+            nodeGameboard.children[i].addEventListener('click', () => {
+                displayController().renderMark(nodeGameboard.children[i])
+                game.playRound([0, i])
+                
+            },{once:true})
+        }
+        if (i >= 3 && i < 6) {
+            nodeGameboard.children[i].addEventListener('click', () => {
+                displayController().renderMark(nodeGameboard.children[i])
+                game.playRound([1, i - 3])
+            },{once:true})
+        }
+        if (i >= 6) {
+            nodeGameboard.children[i].addEventListener('click', () => {
+                displayController().renderMark(nodeGameboard.children[i])
+                game.playRound([2, i - 6])
+            },{once:true})
+        }
     }
-    if (i >= 3 && i < 6) {
-        nodeGameboard.children[i].addEventListener('click',()=>{
-            game.playRound([1,i-3])
-        })
-    }
-    if (i >= 6) {
-        nodeGameboard.children[i].addEventListener('click',()=>{
-            game.playRound([2,i-6])
-        })
-    }
-}}
-startGame();
+    event.preventDefault();
+}
+document.getElementById("startButton").addEventListener('click', startGame, false);

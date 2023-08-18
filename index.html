@@ -11,34 +11,41 @@
 </head>
 
 <body>
+    <div class="player-info" id="formPlayerInfo">
+        <form action="#" class="form-container" method="post" id="form">
+          <h1>Players Info</h1>
+            <div id="playerOneInfo">
+                <label for="playerOneName"><b>Player One</b></label>
+                <input type="text" placeholder="Name" name="playerOneName" id="playerOneName">
+
+            </div>
+            <div id="playerTwoInfo">
+                <label for="playerTwoName"><b>Player Two</b></label>
+          <input type="text" placeholder="Name" name="playerTwoName" id="playerTwoName">
+
+            </div>
+          
+          <button type="submit" class="btn start" id="startButton" >START GAME</button>
+          
+        </form>
+    </div>
     <div class="container">
         <header>
             <h1>Tic Tac Toe</h1>
             <button type="reset" id="reset"> 🔃 Reset</button>
         </header>
         <main>
-            <div id="players">
-                <div class="player">
-                    <p id="playerOne">Player One</p>
-                    <p id="markerOne">X</p>
-
-
-                </div>
-                <div class="player">
-                    <p id="playerTwo">Player Two</p>
-                    <p id="markerTwo">O</p>
-                </div>
-            </div>
-            <div id="gameboard">
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
-                <div class="cell"></div>
+            <div id="activePlayer"> </div>
+            <div class="gameboard" id="gameboard">
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
+                <div class="cell" data-cell></div>
             </div>
             <div id="score">
                 <div id="winOne">
