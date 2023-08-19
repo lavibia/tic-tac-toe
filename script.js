@@ -88,7 +88,6 @@ const GameController = (playerOne, playerTwo) => {
     const players = [playerOne, playerTwo];
     let activePlayer = players[0];
     let board = Gameboard();
-    displayController().renderPlayer(playerOne, playerTwo);
 
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -122,6 +121,7 @@ const GameController = (playerOne, playerTwo) => {
             })
         })){
             console.log(`${getActivePlayer().getName()} won`);
+            displayController().renderWinner(getActivePlayer().getName());
             return true;
         }else{
             return false;
@@ -142,11 +142,9 @@ const GameController = (playerOne, playerTwo) => {
 
 
 const displayController = () => {
-
+    let winnerDiv=document.getElementById("winner");
     let playerTurn= document.getElementById("activePlayer");
     let nodeGameboard = document.getElementById("gameboard");
-    let winPlayerOne = document.getElementById('winOne').children[0]
-    let winPlayerTwo = document.getElementById('winTwo').children[0]
     const renderMark = (cell) => {
         if(nodeGameboard.classList.contains("x")){
             cell.classList.remove("circle")
@@ -157,10 +155,9 @@ const displayController = () => {
             cell.classList.add("circle")
         }
         }
-    
-    const renderPlayer = (playerOne, playerTwo) => {
-        winPlayerOne.textContent = playerOne.getName();
-        winPlayerTwo.textContent = playerTwo.getName();
+    const renderWinner=(winner)=>{
+        winnerDiv.style.display="grid";
+        winnerDiv.textContent=`${winner} won`;
     }
     const renderActivePLayer = (activePlayer) => {
         console.log(`active ${activePlayer.getName()}`)
@@ -177,8 +174,8 @@ const displayController = () => {
     }
     return {
         // renderGameboard,
-        renderMark,
-        renderPlayer, renderActivePLayer
+        renderMark, renderActivePLayer,
+        renderWinner
     }
 }
 const startGame = (event) => {

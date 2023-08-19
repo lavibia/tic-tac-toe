@@ -199,29 +199,21 @@ main{
 .cell.circle{
     cursor: not-allowed;
 }
-
-#score{
-width: 100%;
-display: flex;
-flex-direction: row;
-justify-content: center;
-gap: 15px;
+#winner{
+    display: none;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    background: rgba(0,0,0,.8);
+    color: white;
+    font-size: 40px;
 }
-#score div{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-height: 100%;
-width: min(25%, 150px);
-background-color: rgb(248, 248, 248);
-color: #363636;
-border-radius: 5px;
-}
-#score p:first-child{
-    font-weight: bold;
-}
-
 footer{
     justify-self: flex-end;
     display: grid;
