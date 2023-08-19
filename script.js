@@ -179,11 +179,12 @@ const displayController = () => {
     }
 }
 const startGame = (event) => {
-    document.getElementById("formPlayerInfo").style.display="none";
+    
 
     let PlayerOneName = document.getElementById('playerOneName').value;
     let PlayeTwoName = document.getElementById('playerTwoName').value;
 console.log(PlayerOneName)
+    document.getElementById("formPlayerInfo").style.display="none";
     
     const game = GameController(Player(PlayerOneName ="Player One", "X"), Player(PlayeTwoName ="Player Two", "O"));
 
