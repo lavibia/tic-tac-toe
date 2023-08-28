@@ -108,11 +108,13 @@ const GameController = (playerOne, playerTwo) => {
         board.updateGameboard(row, column, getActivePlayer().getMarker());
         if(checkWin(getActivePlayer().getMarker()))
             return;
-        checkDraw();
+        if(checkDraw())
+            return;
         
         switchPlayerTurn();
         printNewRound();
     }
+
     const checkWin=(marker)=>{
         if(WINNING_COMBINATIONS.some(combination=>{
             console.log(combination)
@@ -129,7 +131,21 @@ const GameController = (playerOne, playerTwo) => {
 
     }
     const checkDraw=()=>{
-
+        let check=0;
+       board.getGameboard().forEach(row=>{
+        row.forEach(column=>{
+            if(column.getValue()==""){
+                check=-1;
+            }
+        })});
+       console.log(check)
+       if(check==-1){
+        return false;
+       }
+       else{
+       displayController().renderDraw();
+       return true;
+       }
     }
 
     printNewRound();
@@ -156,8 +172,12 @@ const displayController = () => {
         }
         }
     const renderWinner=(winner)=>{
-        winnerDiv.style.display="grid";
+        winnerDiv.parentElement.style.display="flex";
         winnerDiv.textContent=`${winner} won`;
+    }
+    const renderDraw=()=>{
+        winnerDiv.parentElement.style.display="flex";
+        winnerDiv.textContent=`It's a DRAW`;
     }
     const renderActivePLayer = (activePlayer) => {
         console.log(`active ${activePlayer.getName()}`)
@@ -172,20 +192,36 @@ const displayController = () => {
             nodeGameboard.classList.remove("x");
         }
     }
+        const hideWinner=()=>{
+        winnerDiv.parentElement.style.display="none";
+        }
+        resetGameboard=()=>{
+             for (let i = 0; i < nodeGameboard.children.length; i++) {
+                nodeGameboard.children[i].classList.remove("circle");
+                nodeGameboard.children[i].classList.remove("x");
+        }
+    }
+    const saveFormInfo=()=>{
+        localStorage.setItem("PlayerOneName", document.getElementById('playerOneName').value);
+        localStorage.setItem("PlayerTwoName",document.getElementById('playerTwoName').value);
+        if(localStorage.getItem('PlayerOneName')=="")
+        localStorage.setItem("PlayerOneName","Player One")
+        if (localStorage.getItem('PlayerTwoName')=="")
+        localStorage.setItem("PlayerTwoName","Player Two")
+    
+    }
     return {
-        // renderGameboard,
+        resetGameboard,saveFormInfo,
         renderMark, renderActivePLayer,
-        renderWinner
+        renderWinner,renderDraw, hideWinner
     }
 }
-const startGame = (event) => {
-    document.getElementById("formPlayerInfo").style.display="none";
 
-    let PlayerOneName = document.getElementById('playerOneName').value;
-    let PlayeTwoName = document.getElementById('playerTwoName').value;
-console.log(PlayerOneName)
-    
-    const game = GameController(Player(PlayerOneName ="Player One", "X"), Player(PlayeTwoName ="Player Two", "O"));
+
+const startGame = (event) => {
+    displayController().saveFormInfo();
+    document.getElementById("formPlayerInfo").style.display="none";
+    const game = GameController(Player(localStorage.getItem("PlayerOneName"), "X"), Player(localStorage.getItem("PlayerTwoName"), "O"));
 
 
     let nodeGameboard = document.getElementById("gameboard");
@@ -214,4 +250,11 @@ console.log(PlayerOneName)
     }
     event.preventDefault();
 }
+const resetGame=()=>{
+    window.location.reload();
+}
+
+   
+
 document.getElementById("startButton").addEventListener('click', startGame, false);
+document.getElementById("reset").addEventListener('click',resetGame,false);

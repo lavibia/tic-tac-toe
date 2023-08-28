@@ -12,7 +12,7 @@
 
 <body>
     <div class="player-info" id="formPlayerInfo">
-        <form action="#" class="form-container" method="post" id="form">
+        <form action="#" class="form-container" method="get" id="form">
           <h1>Players Info</h1>
             <div id="playerOneInfo">
                 <label for="playerOneName"><b>Player One</b></label>
@@ -29,11 +29,13 @@
           
         </form>
     </div>
-    <div id="winner"></div>
+    <div class="winner-page">
+        <div id="winner"> </div>
+        <button type="reset" id="reset"> 🔃 RESET</button>
+    </div>
     <div class="container">
         <header>
             <h1>Tic Tac Toe</h1>
-            <button type="reset" id="reset"> 🔃 Reset</button>
         </header>
         <main>
             <div id="activePlayer"> </div>
